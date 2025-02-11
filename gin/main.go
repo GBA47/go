@@ -16,10 +16,16 @@ func main() {
 		ctx.String(http.StatusOK, "hello, post方法")
 	})
 	server.GET("/user/:name", func(ctx *gin.Context) {
-		ctx.String(http.StatusOK, "hello, 这是参数路由")
+		name := ctx.Param("name")
+		ctx.String(http.StatusOK, "hello, 这是参数路由"+name)
 	})
 	server.GET("/views/*.html", func(ctx *gin.Context) {
-		ctx.String(http.StatusOK, "hello, 这是通配符路由")
+		page := ctx.Param(".html")
+		ctx.String(http.StatusOK, "hello, 这是通配符路由"+page)
+	})
+	server.GET("/order", func(ctx *gin.Context) {
+		oid := ctx.Query("id")
+		ctx.String(http.StatusOK, "hello, 这是查询参数"+oid)
 	})
 	server.Run(":8080") // 监听并在 0.0.0.0:8080 上启动服务
 
